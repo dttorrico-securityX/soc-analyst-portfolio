@@ -2,7 +2,6 @@
 
 ## Objetivo
 Simular ataque de fuerza bruta RDP desde Kali hacia Windows.
-
 **MITRE:** T1110.001 - Brute Force
 
 ## 1. Topología Usada
@@ -13,10 +12,30 @@ Simular ataque de fuerza bruta RDP desde Kali hacia Windows.
 
 ## 2. Ataque con Hydra (Kali)
 
-```bash
-# Crear listas
-echo -e "administrator\nuser\ndan" > users.txt
-echo -e "123456\npassword\nP@ssw0rd" > passwords.txt
+Crear listas:
+echo "administrator" > users.txt
+echo "P@ssw0rd" > passwords.txt
 
-# Ataque RDP
+Comando:
 hydra -L users.txt -P passwords.txt rdp://192.168.20.30 -V -f
+
+## 3. Detección en Wazuh
+- Event ID Windows: 4625 (Fallo) y 4624 (Éxito)
+- En Wazuh Dashboard busca: rule.id: 60122 AND 192.168.10.10
+
+Regla Custom Wazuh en /var/ossec/etc/rules/local_rules.xml:
+<rule id="100200" level="10" frequency="8" timeframe="120">
+<if_matched_sid>60122</if_matched_sid>
+<same_source_ip />
+<description>Possible RDP Brute Force</description>
+</rule>
+
+## 4. Triage L1 - Reporte
+ID: SOC-2026-001
+Host: PC Windows 192.168.20.30
+IP Origen: 192.168.10.10 (Kali)
+Verdicto: TRUE POSITIVE - Lab Controlado
+Acción: Bloquear IP en FortiGate, habilitar Account Lockout.
+
+## 5. Evidencias
+Ver carpeta screenshots/
