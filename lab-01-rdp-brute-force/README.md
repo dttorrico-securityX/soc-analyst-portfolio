@@ -30,12 +30,20 @@ Regla Custom Wazuh en /var/ossec/etc/rules/local_rules.xml:
 <description>Possible RDP Brute Force</description>
 </rule>
 
-## 4. Triage L1 - Reporte
+## 4. Triaje L1 - Informe
+
+```
 ID: SOC-2026-001
 Host: PC Windows 192.168.20.30
 IP Origen: 192.168.10.10 (Kali)
 Verdicto: TRUE POSITIVE - Lab Controlado
 Acción: Bloquear IP en FortiGate, habilitar Account Lockout.
+
+Timeline:
+- 21:10:01 - Primer fallo 4625
+- 21:10:45 - 15 fallos desde misma IP
+- 21:11:20 - Alerta Wazuh 100200 disparada
+```
 
 ## 5. Evidencias
 Ver carpeta screenshots/
