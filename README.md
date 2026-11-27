@@ -1,4 +1,4 @@
-# Cartera de Analista SOC | Daniel Torrico Alvarez
+# Soc-Analyst-PortFolio | Daniel Torrico Alvarez
 
 > Home SOC Lab con segmentación real - FortiGate Firewall + Wazuh SIEM + Kali Attacker
 
